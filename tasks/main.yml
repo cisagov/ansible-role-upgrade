@@ -1,2 +1,27 @@
 ---
-# tasks file for skeleton
+# tasks file for upgrade
+- name: Install aptitude
+  apt:
+    name: 'aptitude'
+    force_apt_get: yes
+  when: ansible_os_family == "Debian"
+
+- name: Upgrade all Debian packages
+  apt:
+    name: '*'
+    # ansible-lint generates a warning that "package installs should
+    # not use latest" here, but this is one place where we want to use
+    # it.
+    state: latest  # noqa 403
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Upgrade all RedHat packages
+  yum:
+    name: '*'
+    # ansible-lint generates a warning that "package installs should
+    # not use latest" here, but this is one place where we want to use
+    # it.
+    state: latest  # noqa 403
+    update_cache: yes
+  when: ansible_os_family == "RedHat"

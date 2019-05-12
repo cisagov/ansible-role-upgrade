@@ -15,8 +15,8 @@ Before contributing, we encourage you to read our CONTRIBUTING policy
 
 If you want to report a bug or request a new feature, the most direct
 method is to [create an
-issue](https://github.com/cisagov/skeleton-ansible-role/issues) in
-this repository.  We recommend that you first search through existing
+issue](https://github.com/cisagov/ansible-role-upgrade/issues) in this
+repository.  We recommend that you first search through existing
 issues (both open and closed) to check if your particular issue has
 already been reported.  If it has then you might want to add a comment
 to the existing issue.  If it hasn't then feel free to create a new
@@ -25,7 +25,7 @@ one.
 ## Pull requests ##
 
 If you choose to [submit a pull
-request](https://github.com/cisagov/skeleton-ansible-role/pulls), you
+request](https://github.com/cisagov/ansible-role-upgrade/pulls), you
 will notice that our continuous integration (CI) system runs a fairly
 extensive set of linters and syntax checkers.  Your pull request may
 fail these checks, and that's OK.  If you want you can stop there and
@@ -78,9 +78,9 @@ can create and configure the Python virtual environment with these
 commands:
 
 ```bash
-cd skeleton-ansible-role
-pyenv virtualenv <python_version_to_use> skeleton-ansible-role
-pyenv local skeleton-ansible-role
+cd ansible-role-upgrade
+pyenv virtualenv <python_version_to_use> ansible-role-upgrade
+pyenv local ansible-role-upgrade
 pip install -r requirements-dev.txt
 ```
 

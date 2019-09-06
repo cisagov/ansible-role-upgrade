@@ -10,6 +10,10 @@ platforms:
     image: debian:stretch-slim
     groups:
       - debian
+  - name: debian10
+    image: debian:buster-slim
+    groups:
+      - debian
   - name: amazon2018.03
     image: amazonlinux:2018.03
     groups:

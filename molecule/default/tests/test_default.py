@@ -31,7 +31,9 @@ def test_debian_updated(host):
         ).total_seconds() <= 10 * 60
 
 
-def test_redhat_updated(host):
+# This test can fail if there were no updates to install.
+@pytest.mark.xfail
+def test_redhat_updated_time(host):
     """Test that RedHat instances were updated."""
     ansible_vars = host.ansible.get_variables()
     if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["amazon"]:
@@ -44,3 +46,12 @@ def test_redhat_updated(host):
         # Make sure that the instance was updated in the last 10
         # minutes
         assert (datetime.datetime.now() - last_update).total_seconds() <= 10 * 60
+
+
+def test_redhat_updated_command_output(host):
+    """Test that RedHat instances were updated."""
+    ansible_vars = host.ansible.get_variables()
+    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["amazon"]:
+        yum_output = host.run("yum update")
+        # If the update succeeded or there was nothing to update
+        assert "No packages marked for update" in yum_output.stdout

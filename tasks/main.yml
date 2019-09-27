@@ -6,7 +6,7 @@
     force_apt_get: yes
   when: ansible_os_family == "Debian"
 
-- name: reinstall cryptsetup-initramfs to fix upgrade
+- name: apt-get update
   shell: apt-get update
   when: ansible_distribution_release == "kali-rolling"
 
@@ -14,7 +14,7 @@
   shell: apt-get install --reinstall cryptsetup-initramfs -y
   when: ansible_distribution_release == "kali-rolling"
 
-- name: reinstall cryptsetup-initramfs to fix upgrade
+- name: Upgrade with noninteractive frontend to handle GUI prompts
   shell: DEBIAN_FRONTEND=noninteractive apt-get -yy upgrade
   when: ansible_distribution_release == "kali-rolling"
 

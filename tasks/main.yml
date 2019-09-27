@@ -9,9 +9,9 @@
 - name: reinstall cryptsetup-initramfs to fix upgrade
   shell: apt-get update
   when: ansible_distribution_release == "kali-rolling"
-  
+
 - name: reinstall cryptsetup-initramfs to fix upgrade
-  shell: apt-get install --reinstall cryptsetup-initramfs
+  shell: apt-get install --reinstall cryptsetup-initramfs -y
   when: ansible_distribution_release == "kali-rolling"
 
 - name: reinstall cryptsetup-initramfs to fix upgrade

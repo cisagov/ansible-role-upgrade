@@ -15,8 +15,10 @@
   when: ansible_distribution_release == "kali-rolling"
 
 - name: Upgrade with noninteractive frontend to handle GUI prompts
-  shell: DEBIAN_FRONTEND=noninteractive apt-get -yy upgrade
+  shell: apt-get -yy upgrade
   when: ansible_distribution_release == "kali-rolling"
+  environment:
+    DEBIAN_FRONTEND: "noninteractive"
 
 - name: Upgrade all Kali packages
   apt:

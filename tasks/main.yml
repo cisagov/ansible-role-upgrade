@@ -6,16 +6,18 @@
     force_apt_get: yes
   when: ansible_os_family == "Debian"
 
-- name: apt-get update
-  shell: apt-get update
+- name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
+  apt:
+    name: 'cryptsetup-initramfs'
+    state: latest  # noqa 403
+    update_cache: yes
   when: ansible_distribution_release == "kali-rolling"
 
-- name: reinstall cryptsetup-initramfs to fix upgrade
-  shell: apt-get install --reinstall cryptsetup-initramfs -y
-  when: ansible_distribution_release == "kali-rolling"
-
-- name: Upgrade with noninteractive frontend to handle GUI prompts
-  shell: apt-get -yy upgrade
+- name: Upgrade all packages for Kali and get around GUI prompts with environment variable
+  apt:
+    name: '*'
+    state: latest  # noqa 403
+    update_cache: yes
   when: ansible_distribution_release == "kali-rolling"
   environment:
     DEBIAN_FRONTEND: noninteractive

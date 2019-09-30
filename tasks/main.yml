@@ -18,7 +18,7 @@
   shell: apt-get -yy upgrade
   when: ansible_distribution_release == "kali-rolling"
   environment:
-    DEBIAN_FRONTEND: "noninteractive"
+    DEBIAN_FRONTEND: noninteractive
 
 - name: Upgrade all Kali packages
   apt:

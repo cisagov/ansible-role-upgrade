@@ -18,6 +18,8 @@ platforms:
     image: amazonlinux:2018.03
     groups:
       - amazon
+  - name: bootstrap-kali
+    image: kalilinux/kali-linux-docker
 provisioner:
   name: ansible
   lint:

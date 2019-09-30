@@ -6,32 +6,6 @@
     force_apt_get: yes
   when: ansible_os_family == "Debian"
 
-- name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
-  apt:
-    name: 'cryptsetup-initramfs'
-    state: latest  # noqa 403
-    update_cache: yes
-  when: ansible_distribution_release == "kali-rolling"
-
-- name: Upgrade all packages for Kali and get around GUI prompts with environment variable
-  apt:
-    name: '*'
-    state: latest  # noqa 403
-    update_cache: yes
-  when: ansible_distribution_release == "kali-rolling"
-  environment:
-    DEBIAN_FRONTEND: noninteractive
-
-- name: Upgrade all Kali packages
-  apt:
-    name: '*'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
-    update_cache: yes
-  when: ansible_os_family == "RedHat"
-
 - name: Upgrade all Debian packages
   apt:
     name: '*'
@@ -40,7 +14,28 @@
     # it.
     state: latest  # noqa 403
     update_cache: yes
-  when: ansible_os_family == "Debian" and ansible_distribution_release != "kali-rolling"
+  when: >
+    ansible_os_family == "Debian" and
+    ansible_distribution_release != "kali-rolling"
+
+- name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
+  apt:
+    name: 'cryptsetup-initramfs'
+    state: latest  # noqa 403
+    update_cache: yes
+  when: ansible_distribution_release == "kali-rolling"
+
+- name: Upgrade Kali packages/get around GUI prompts with environment variable
+  apt:
+    name: '*'
+    # ansible-lint generates a warning that "package installs should
+    # not use latest" here, but this is one place where we want to use
+    # it.
+    state: latest  # noqa 403
+    update_cache: yes
+  when: ansible_distribution_release == "kali-rolling"
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
 - name: Upgrade all RedHat packages
   yum:

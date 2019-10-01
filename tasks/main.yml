@@ -25,18 +25,24 @@
     update_cache: yes
   when: ansible_distribution_release == "kali-rolling"
 
-- name: Upgrade Kali packages/get around GUI prompts with environment variable
-  apt:
-    name: '*'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
-    update_cache: yes
+- name: Upgrade with noninteractive frontend to handle GUI prompts
+  shell: apt-get -yy upgrade
   when: ansible_distribution_release == "kali-rolling"
   environment:
     DEBIAN_FRONTEND: noninteractive
 
+# - name: Upgrade Kali packages/get around GUI prompts with environment variable
+#   apt:
+#     name: '*'
+#     # ansible-lint generates a warning that "package installs should
+#     # not use latest" here, but this is one place where we want to use
+#     # it.
+#     state: latest  # noqa 403
+#     update_cache: yes
+#   when: ansible_distribution_release == "kali-rolling"
+#   environment:
+#     DEBIAN_FRONTEND: noninteractive
+# 
 - name: Upgrade all RedHat packages
   yum:
     name: '*'

@@ -33,11 +33,7 @@
 
 - name: Upgrade Kali packages
   apt:
-    name: '*'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
+    upgrade: dist
     update_cache: yes
     cache_valid_time: 3600
     # Because the cache was updated for cryptsetup don't update the cache if

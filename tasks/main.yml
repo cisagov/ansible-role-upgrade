@@ -33,7 +33,7 @@
 
 - name: Upgrade Kali packages
   apt:
-    upgrade: dist
+    upgrade: yes
     update_cache: yes
     cache_valid_time: 3600
     # Because the cache was updated for cryptsetup don't update the cache if

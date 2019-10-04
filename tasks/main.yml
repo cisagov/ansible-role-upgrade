@@ -25,20 +25,17 @@
     update_cache: yes
   when: ansible_distribution_release == "kali-rolling"
 
-# - name: Upgrade with noninteractive frontend to handle GUI prompts
-#   shell: apt-get -yy upgrade
-#   when: ansible_distribution_release == "kali-rolling"
-#   environment:
-#     DEBIAN_FRONTEND: noninteractive
-
-- name: Upgrade Kali packages
-  apt:
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: 3600
-    # Because the cache was updated for cryptsetup don't update the cache if
-    # it has been less that 60 minutes
+- name: apt-get update
+  shell: apt-get update
   when: ansible_distribution_release == "kali-rolling"
+
+# Upgrading with shell command instead of apt ansible module
+# See https://github.com/ansible/ansible/issues/63134 for more info
+- name: Upgrade with noninteractive frontend to handle GUI prompts
+  shell: apt-get -yy upgrade
+  when: ansible_distribution_release == "kali-rolling"
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
 - name: Upgrade all RedHat packages
   yum:

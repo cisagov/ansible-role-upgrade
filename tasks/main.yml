@@ -21,10 +21,6 @@
 - name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
   apt:
     name: 'cryptsetup-initramfs'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
     update_cache: yes
   when: ansible_distribution_release == "kali-rolling"
 

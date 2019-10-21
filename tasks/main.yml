@@ -18,33 +18,38 @@
     ansible_os_family == "Debian" and
     ansible_distribution_release != "kali-rolling"
 
-- name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
-  apt:
-    name: 'cryptsetup-initramfs'
-    update_cache: yes
-  when: ansible_distribution_release == "kali-rolling"
+# Kali linux is a special case, since the usual Debian foo doesn't
+# seem to work for it
+- name: Kali-specific tasks
+  block:
+    - name: apt-get update
+      command: apt-get update
+      args:
+        warn: false
+      # Ignore idempotence test because apt-get update cannot
+      # guarantee idempotence
+      tags:
+        - molecule-idempotence-notest
 
-- name: apt-get update
-  command: apt-get update
-  args:
-    warn: false
-  when: ansible_distribution_release == "kali-rolling"
-  # ignore idempotence test because apt-get update cannot guarantee
-  # idempotence compliance
-  tags: molecule-idempotence-notest
+    - name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
+      apt:
+        name: 'cryptsetup-initramfs'
 
-# Upgrading with command module instead of apt ansible module
-# See https://github.com/ansible/ansible/issues/63134 for more info
-- name: Upgrade with noninteractive frontend to handle GUI prompts
-  command: apt-get -yy upgrade
+    # Upgrade with command module instead of apt ansible module
+    #
+    # See https://github.com/ansible/ansible/issues/63134 for more
+    # info
+    - name: Upgrade with noninteractive frontend to handle GUI prompts
+      command: apt-get -yy upgrade
+      args:
+        warn: false
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+      # Ignore idempotence test because apt-get upgrade cannot
+      # guarantee idempotence
+      tags:
+        - molecule-idempotence-notest
   when: ansible_distribution_release == "kali-rolling"
-  args:
-    warn: false
-  environment:
-    DEBIAN_FRONTEND: noninteractive
-  # ignore idempotence test because apt-get upgrade cannot guarantee
-  # idempotence compliance
-  tags: molecule-idempotence-notest
 
 - name: Upgrade all RedHat packages
   yum:

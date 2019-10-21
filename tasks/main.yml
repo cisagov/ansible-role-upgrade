@@ -26,20 +26,22 @@
   when: ansible_distribution_release == "kali-rolling"
 
 - name: apt-get update
-  shell: apt-get update  # noqa 303 305 molecule-idempotence-notest
+  shell: apt-get update  # noqa 303 305
   args:
     warn: false
   when: ansible_distribution_release == "kali-rolling"
+  tags: molecule-idempotence-notest
 
 # Upgrading with shell command instead of apt ansible module
 # See https://github.com/ansible/ansible/issues/63134 for more info
 - name: Upgrade with noninteractive frontend to handle GUI prompts
-  shell: apt-get -yy upgrade  # noqa 303 305 molecule-idempotence-notest
+  shell: apt-get -yy upgrade  # noqa 303 305
   when: ansible_distribution_release == "kali-rolling"
   args:
     warn: false
   environment:
     DEBIAN_FRONTEND: noninteractive
+  tags: molecule-idempotence-notest
 
 - name: Upgrade all RedHat packages
   yum:

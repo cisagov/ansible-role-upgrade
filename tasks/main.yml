@@ -35,7 +35,7 @@
   args:
     warn: false
   when: ansible_distribution_release == "kali-rolling"
-  # ignore idempotence test because apt-get update cannot guuarantee
+  # ignore idempotence test because apt-get update cannot guarantee
   # idempotence compliant
   tags: molecule-idempotence-notest
 
@@ -51,7 +51,7 @@
     warn: false
   environment:
     DEBIAN_FRONTEND: noninteractive
-  # ignore idempotence test because apt-get upgrade cannot guuarantee
+  # ignore idempotence test because apt-get upgrade cannot guarantee
   # idempotence compliant
   tags: molecule-idempotence-notest
 

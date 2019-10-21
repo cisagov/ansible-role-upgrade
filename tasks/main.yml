@@ -29,8 +29,8 @@
   args:
     warn: false
   when: ansible_distribution_release == "kali-rolling"
-  # ignore idempotence test because apt-get update cannot guuarantee
-  # idempotence compliant
+  # ignore idempotence test because apt-get update cannot guarantee
+  # idempotence compliance
   tags: molecule-idempotence-notest
 
 # Upgrading with command module instead of apt ansible module
@@ -43,7 +43,7 @@
   environment:
     DEBIAN_FRONTEND: noninteractive
   # ignore idempotence test because apt-get upgrade cannot guuarantee
-  # idempotence compliant
+  # idempotence compliance
   tags: molecule-idempotence-notest
 
 - name: Upgrade all RedHat packages

@@ -27,7 +27,8 @@
 
 - name: apt-get update
   shell: apt-get update  # noqa 303 305
-  warn: false
+  args:
+    warn: false
   when: ansible_distribution_release == "kali-rolling"
 
 # Upgrading with shell command instead of apt ansible module
@@ -35,7 +36,8 @@
 - name: Upgrade with noninteractive frontend to handle GUI prompts
   shell: apt-get -yy upgrade  # noqa 303 305
   when: ansible_distribution_release == "kali-rolling"
-  warn: false
+  args:
+    warn: false
   environment:
     DEBIAN_FRONTEND: noninteractive
 

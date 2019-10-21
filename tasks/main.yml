@@ -42,7 +42,7 @@
     warn: false
   environment:
     DEBIAN_FRONTEND: noninteractive
-  # ignore idempotence test because apt-get upgrade cannot guuarantee
+  # ignore idempotence test because apt-get upgrade cannot guarantee
   # idempotence compliance
   tags: molecule-idempotence-notest
 

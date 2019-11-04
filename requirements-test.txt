@@ -1,6 +1,6 @@
 # Force ansible-lint to be a pre-release version temporarily
 # https://github.com/ansible/ansible-lint/issues/484 fixed bug
-# in ansible-lint noqa within block. Require pre-realse with bug fix
+# in ansible-lint noqa within block. Require pre-release with bug fix
 ansible-lint==4.1.1a3
 docker # Needed for molecule to work correctly
 molecule

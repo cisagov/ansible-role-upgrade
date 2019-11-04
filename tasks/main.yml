@@ -41,7 +41,8 @@
         state: latest  # noqa 403
 
     # Upgrade with command module instead of apt ansible module
-    # and ignore configuration file changes
+    # and ignore configuration file changes just like
+    # ansible apt dpkg_options default behavior
     # See https://github.com/ansible/ansible/issues/63134 for more
     # info
     - name: Upgrade with noninteractive frontend to handle GUI prompts

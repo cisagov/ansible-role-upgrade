@@ -1,3 +1,5 @@
+# Force ansible-lint to be a pre-release version temporarily
+ansible-lint==4.1.1a3
 docker # Needed for molecule to work correctly
 molecule
 pre-commit

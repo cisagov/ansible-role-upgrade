@@ -31,16 +31,20 @@
       tags:
         - molecule-idempotence-notest
 
+    # The lastest cryptsetup-initramfs is needed to fix upgrade
     - name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
       apt:
         name: 'cryptsetup-initramfs'
+        state: latest
 
     # Upgrade with command module instead of apt ansible module
-    #
+    # and ignore configuration file changes
     # See https://github.com/ansible/ansible/issues/63134 for more
     # info
     - name: Upgrade with noninteractive frontend to handle GUI prompts
-      command: apt-get -yy upgrade
+      command: >
+        apt-get -yy -o Dpkg::Options::="--force-confdef"
+        -o Dpkg::Options::="--force-confold" upgrade
       args:
         warn: false
       environment:

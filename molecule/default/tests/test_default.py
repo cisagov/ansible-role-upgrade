@@ -16,15 +16,19 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 @pytest.mark.parametrize("pkg", ["aptitude"])
 def test_debian_packages(host, pkg):
     """Test that appropriate packages were installed on Debian."""
-    ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["debian"]:
+    if (
+        host.system_info.distribution == "debian"
+        or host.system_info.distribution == "kali"
+    ):
         assert host.package(pkg).is_installed
 
 
 def test_debian_updated(host):
     """Test that Debian instances were updated."""
-    ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["debian"]:
+    if (
+        host.system_info.distribution == "debian"
+        or host.system_info.distribution == "kali"
+    ):
         print(host.file("/var/lib/apt/lists").mtime)
         # Make sure that the instance was updated in the last 10
         # minutes
@@ -37,8 +41,10 @@ def test_debian_updated(host):
 @pytest.mark.xfail
 def test_redhat_updated_time(host):
     """Test that RedHat instances were updated."""
-    ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["redhat"]:
+    if (
+        host.system_info.distribution == "amzn"
+        or host.system_info.distribution == "fedora"
+    ):
         last_update = datetime.datetime.strptime(
             host.run(
                 "yum --quiet history list | cut --delimiter='|' --fields=3-4 | grep -F U | cut --delimiter='|' --fields=1 | head --lines=1"
@@ -52,8 +58,10 @@ def test_redhat_updated_time(host):
 
 def test_redhat_updated_command_output(host):
     """Test that RedHat instances were updated."""
-    ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["redhat"]:
+    if (
+        host.system_info.distribution == "amzn"
+        or host.system_info.distribution == "fedora"
+    ):
         yum_output = host.run("yum update")
         # If the update succeeded or there was nothing to update
         assert (

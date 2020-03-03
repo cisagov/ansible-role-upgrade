@@ -8,20 +8,12 @@ lint:
 platforms:
   - name: amazonlinux2
     image: amazonlinux:2
-    groups:
-      - redhat
   - name: debian9
     image: debian:stretch-slim
-    groups:
-      - debian
   - name: debian10
     image: debian:buster-slim
-    groups:
-      - debian
   - name: fedora29
     image: fedora:29
-    groups:
-      - redhat
   # Ansible currently insists on installing python2-dnf, which does
   # not exist in Fedora 30.  Until that is resolved, we can't use
   # Fedora 30.
@@ -29,12 +21,8 @@ platforms:
   #   image: fedora:30
   - name: fedora31
     image: fedora:31
-    groups:
-      - redhat
   - name: kali
     image: kalilinux/kali-rolling
-    groups:
-      - debian
 provisioner:
   name: ansible
   lint:

@@ -38,10 +38,10 @@ def test_debian_updated(host):
 def test_redhat_updated_time(host):
     """Test that RedHat instances were updated."""
     ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["amazon"]:
+    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["redhat"]:
         last_update = datetime.datetime.strptime(
             host.run(
-                "yum --quiet history list | cut --delimiter='|' --fields=3-4 | grep -F Update | cut --delimiter='|' --fields=1"
+                "yum --quiet history list | cut --delimiter='|' --fields=3-4 | grep -F U | cut --delimiter='|' --fields=1 | head --lines=1"
             ).stdout.strip(),
             "%Y-%m-%d %H:%M",
         )
@@ -53,7 +53,10 @@ def test_redhat_updated_time(host):
 def test_redhat_updated_command_output(host):
     """Test that RedHat instances were updated."""
     ansible_vars = host.ansible.get_variables()
-    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["amazon"]:
+    if ansible_vars["inventory_hostname"] in ansible_vars["groups"]["redhat"]:
         yum_output = host.run("yum update")
         # If the update succeeded or there was nothing to update
-        assert "No packages marked for update" in yum_output.stdout
+        assert (
+            "No packages marked for update" in yum_output.stdout
+            or "Nothing to do" in yum_output.stdout
+        )

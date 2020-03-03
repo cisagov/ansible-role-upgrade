@@ -1,7 +1,6 @@
-# Force ansible-lint to be a pre-release version temporarily
-# https://github.com/ansible/ansible-lint/issues/484 fixed bug
-# in ansible-lint noqa within block. Require pre-release with bug fix
-ansible-lint==4.1.1a3
-docker # Needed for molecule to work correctly
-molecule
+# molecule v3 introduces substantial changes to how tests are configured.
+# Moving to v3+ will require other changes to be in place so we will pin under
+# that version for now. When v3 sees an official release we should revisit and
+# make the necessary changes.
+molecule[docker] < 3
 pre-commit

@@ -2,16 +2,28 @@
 galaxy_info:
   author: First Last
   description: Skeleton Ansible role
-  company: CISA NCATS
+  company: CISA Cyber Assessments
   license: CC0
   min_ansible_version: 2.0
   platforms:
+    - name: Amazon
+      versions:
+        - 2
     - name: Debian
       versions:
         - stretch
-    - name: Amazon
+        - buster
+        # Kali linux isn't an option here, but it is based on Debian
+        # testing
+        - bullseye
+    - name: Fedora
       versions:
-        - 2018.03
+        - 29
+        # Ansible currently insists on installing python2-dnf, which
+        # does not exist in Fedora 30.  Until that is resolved, we
+        # can't use Fedora 30.
+        # - 30
+        - 31
   galaxy_tags:
     - skeleton
 

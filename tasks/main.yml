@@ -1,65 +1,23 @@
 ---
 # tasks file for upgrade
-- name: Install aptitude
-  apt:
-    name: 'aptitude'
-    force_apt_get: yes
-  when: ansible_os_family == "Debian"
 
-- name: Upgrade all Debian packages
-  apt:
-    name: '*'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
-    update_cache: yes
-  when: >
-    ansible_os_family == "Debian" and
-    ansible_distribution_release != "kali-rolling"
-
-# Kali linux is a special case, since the usual Debian foo doesn't
-# seem to work for it
-- name: Kali-specific tasks
+- name: Debian-specific tasks
   block:
-    - name: apt-get update
-      command: apt-get update
-      args:
-        warn: false
-      # Ignore idempotence test because apt-get update cannot
-      # guarantee idempotence
-      tags:
-        - molecule-idempotence-notest
-
-    # The lastest cryptsetup-initramfs is needed to fix upgrade
-    - name: Reinstall cryptsetup-initramfs so upgrade doesn't fail
+    - name: Install aptitude
       apt:
-        name: 'cryptsetup-initramfs'
-        # ansible-lint generates a warning that "package installs should
-        # not use latest" here, but this is one place where we want to use
-        # it.
+        name: 'aptitude'
+        force_apt_get: yes
+    - name: Upgrade all packages (Debian)
+      apt:
+        name: '*'
+        # ansible-lint generates a warning that "package installs
+        # should not use latest" here, but this is one place where we
+        # want to use it.
         state: latest  # noqa 403
+        update_cache: yes
+  when: ansible_os_family == "Debian" or ansible_os_family == "Kali GNU/Linux"
 
-    # Upgrade with command module instead of apt ansible module
-    # and ignore configuration file changes just like
-    # ansible apt dpkg_options default behavior
-    # See https://github.com/ansible/ansible/issues/63134 for more
-    # info
-    - name: Upgrade with noninteractive frontend to handle GUI prompts
-      command: >
-        apt-get -yy -o Dpkg::Options::="--force-confdef"
-        -o Dpkg::Options::="--force-confold" upgrade
-      args:
-        warn: false
-      environment:
-        DEBIAN_FRONTEND: noninteractive
-      # Ignore idempotence test because apt-get upgrade cannot
-      # guarantee idempotence
-      tags:
-        - molecule-idempotence-notest
-  when: ansible_distribution_release == "kali-rolling"
-
-- name: Upgrade all RedHat packages
+- name: Upgrade all packages (RedHat)
   yum:
     name: '*'
     # ansible-lint generates a warning that "package installs should

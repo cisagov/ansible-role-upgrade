@@ -1,28 +1,17 @@
 ---
 # tasks file for upgrade
 
-- name: Debian-specific tasks
-  block:
-    - name: Install aptitude
-      apt:
-        name: 'aptitude'
-        force_apt_get: yes
-    - name: Upgrade all packages (Debian)
-      apt:
-        name: '*'
-        # ansible-lint generates a warning that "package installs
-        # should not use latest" here, but this is one place where we
-        # want to use it.
-        state: latest  # noqa 403
-        update_cache: yes
-  when: ansible_os_family == "Debian" or ansible_os_family == "Kali GNU/Linux"
-
-- name: Upgrade all packages (RedHat)
-  yum:
-    name: '*'
-    # ansible-lint generates a warning that "package installs should
-    # not use latest" here, but this is one place where we want to use
-    # it.
-    state: latest  # noqa 403
-    update_cache: yes
-  when: ansible_os_family == "RedHat"
+- name: Load tasks file with install tasks based on the OS type
+  include: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        # The OS family and distribution for Kali is "Kali GNU/Linux",
+        # which is not an allowable file name in Linux due to the
+        # slash.  We will allow Kali to fall through and use the
+        # Debian tasks file.
+        - Debian.yml
+      paths:
+        - "{{ role_path }}/tasks"

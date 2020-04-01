@@ -1,0 +1,11 @@
+---
+# tasks file for upgrade (Debian)
+
+- name: Install aptitude (Debian)
+  apt:
+    name: 'aptitude'
+    force_apt_get: yes
+- name: Upgrade all packages (Debian)
+  apt:
+    upgrade: dist
+    update_cache: yes

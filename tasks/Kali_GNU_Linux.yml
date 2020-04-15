@@ -1,0 +1,5 @@
+---
+# tasks file for upgrade (Kali)
+
+- name: Use Debian tasks for Kali
+  include_tasks: Debian.yml

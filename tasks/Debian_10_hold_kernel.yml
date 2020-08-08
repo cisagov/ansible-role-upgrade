@@ -1,0 +1,29 @@
+---
+- name: Install aptitude (Debian)
+  apt:
+    name: aptitude
+    force_apt_get: yes
+    update_cache: yes
+
+# On Debian, the 4.19.132-1 kernel is randomly locking up on us, while
+# the 4.19.118-2 kernel worked just fine.  Until we can determine the
+# exact reason for the failure and verify that it has been fixed, we
+# will install the 4.19.118-2 kernel and hold that package.
+- name: Remove current kernel (Debian)
+  apt:
+    name:
+      - linux-headers-cloud-amd64
+      - linux-image-cloud-amd64
+    state: absent
+- name: Install specific version of kernel (Debian)
+  apt:
+    name:
+      - linux-headers-4.19.0-9-cloud-amd64
+      - linux-image-4.19.0-9-cloud-amd64
+- name: Hold the kernel so that it is not upgrades via apt-get upgrade
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - linux-headers-4.19.0-9-cloud-amd64
+    - linux-image-4.19.0-9-cloud-amd64

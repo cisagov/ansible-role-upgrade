@@ -15,6 +15,8 @@
       - linux-headers-cloud-amd64
       - linux-image-cloud-amd64
     state: absent
+  tags:
+    - molecule-idempotence-notest
 - name: Install specific version of kernel (Debian)
   apt:
     name:

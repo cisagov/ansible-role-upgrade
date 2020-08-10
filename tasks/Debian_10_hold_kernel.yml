@@ -12,7 +12,6 @@
 - name: Remove all installed kernels (Debian)
   apt:
     name:
-      - linux-headers-*
       - linux-image-*
     state: absent
   tags:

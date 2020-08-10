@@ -13,6 +13,20 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
+def test_debian_kernel_held(host):
+    """Test that Debian kernel is held."""
+    if (
+        host.system_info.distribution == "debian"
+        and host.system_info.codename == "buster"
+    ):
+        assert set(host.file("/boot").listdir()) == {
+            "System.map-4.19.0-9-cloud-amd64",
+            "config-4.19.0-9-cloud-amd64",
+            "initrd.img-4.19.0-9-cloud-amd64",
+            "vmlinuz-4.19.0-9-cloud-amd64",
+        }
+
+
 @pytest.mark.parametrize("pkg", ["aptitude"])
 def test_debian_packages(host, pkg):
     """Test that appropriate packages were installed on Debian."""

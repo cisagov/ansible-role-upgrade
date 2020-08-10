@@ -3,7 +3,7 @@
 
 - name: Install aptitude (Debian)
   apt:
-    name: 'aptitude'
+    name: aptitude
     force_apt_get: yes
     update_cache: yes
 - name: Upgrade all packages (Debian)

@@ -30,11 +30,11 @@ def test_debian_updated(host):
         or host.system_info.distribution == "kali"
     ):
         print(host.file("/var/lib/apt/lists").mtime)
-        # Make sure that the instance was updated in the last 10
-        # minutes
+        # Make sure that the instance was updated in the last 20
+        # minutes.
         assert (
             datetime.datetime.now() - host.file("/var/lib/apt/lists").mtime
-        ).total_seconds() <= 10 * 60
+        ).total_seconds() <= 20 * 60
 
 
 # This test can fail if there were no updates to install.
@@ -51,9 +51,9 @@ def test_redhat_updated_time(host):
             ).stdout.strip(),
             "%Y-%m-%d %H:%M",
         )
-        # Make sure that the instance was updated in the last 10
-        # minutes
-        assert (datetime.datetime.now() - last_update).total_seconds() <= 10 * 60
+        # Make sure that the instance was updated in the last 20
+        # minutes.
+        assert (datetime.datetime.now() - last_update).total_seconds() <= 20 * 60
 
 
 def test_redhat_updated_command_output(host):

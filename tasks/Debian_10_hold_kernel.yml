@@ -22,7 +22,7 @@
     name:
       - linux-headers-4.19.0-9-cloud-amd64
       - linux-image-4.19.0-9-cloud-amd64
-- name: Hold the kernel so that it is not upgrades via apt-get upgrade
+- name: Hold the kernel so that it is not upgraded via apt-get upgrade
   dpkg_selections:
     name: "{{ item }}"
     selection: hold

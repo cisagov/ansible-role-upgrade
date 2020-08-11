@@ -1,0 +1,4 @@
+---
+- name: Run update-grub
+  command:
+    cmd: /usr/sbin/update-grub

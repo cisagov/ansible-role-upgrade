@@ -15,7 +15,7 @@
     - name: Group hosts by OS distribution
       group_by:
         key: os_{{ ansible_distribution }}_{{ ansible_distribution_version }}
-- name: Wait for systemd to complete initialization (Debian)
+- name: Install the latest kernel (Debian 10)
   hosts: os_Debian_10
   tasks:
     - name: Install aptitude (Debian 10)

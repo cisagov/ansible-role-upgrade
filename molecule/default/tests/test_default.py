@@ -19,12 +19,12 @@ def test_debian_kernel_held(host):
         host.system_info.distribution == "debian"
         and host.system_info.codename == "buster"
     ):
-        assert set(host.file("/boot").listdir()) == {
+        assert {
             "System.map-4.19.0-9-cloud-amd64",
             "config-4.19.0-9-cloud-amd64",
             "initrd.img-4.19.0-9-cloud-amd64",
             "vmlinuz-4.19.0-9-cloud-amd64",
-        }
+        }.issubset(set(host.file("/boot").listdir()))
 
 
 @pytest.mark.parametrize("pkg", ["aptitude"])

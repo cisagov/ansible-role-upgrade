@@ -5,19 +5,36 @@
     force_apt_get: yes
     update_cache: yes
 
-# On Debian, the 4.19.132-1 kernel is randomly locking up on us, while
-# the 4.19.118-2 kernel worked just fine.  Until we can determine the
-# exact reason for the failure and verify that it has been fixed, we
-# will install the 4.19.118-2 kernel and hold that package.
+# On Debian 10, the 4.19.132-1 kernel is randomly locking up on us,
+# while the 4.19.118-2 kernel worked just fine.  By turning on kdump
+# functionality, we were able to verify that the cause of the lockups
+# is exactly what is discussed in these links: *
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=966846 *
+# https://lkml.org/lkml/2020/7/20/883
+#
+# Until we can verify that the kernel bug has been fixed, we will
+# install the 4.19.118-2 kernel and reconfigure grub to set it as the
+# default kernel.
 - name: Install specific version of kernel (Debian)
   apt:
     name:
       - linux-headers-4.19.0-9-cloud-amd64
       - linux-image-4.19.0-9-cloud-amd64
-- name: Hold the kernel so that it is not upgraded via apt-get upgrade
-  dpkg_selections:
-    name: "{{ item }}"
-    selection: hold
-  loop:
-    - linux-headers-4.19.0-9-cloud-amd64
-    - linux-image-4.19.0-9-cloud-amd64
+- name: Examine /etc/default/grub
+  stat:
+    path: /etc/default/grub
+  register: etc_default_grub
+- name: >
+    Make the kernel we just installed the default kernel in grub,
+    if grub is installed
+  lineinfile:
+    path: /etc/default/grub
+    regexp: ^GRUB_DEFAULT=
+    line: >
+      GRUB_DEFAULT="Advanced options for Debian GNU/Linux>
+      Debian GNU/Linux, with Linux 4.19.0-9-cloud-amd64"
+    backrefs: yes
+  when:
+    - etc_default_grub.stat.exists
+  notify:
+    - Run update-grub

@@ -1,10 +1,10 @@
 ---
 galaxy_info:
-  author: First Last
-  description: Skeleton Ansible role
+  author: Jeremy Frasier
+  description: Upgrade all packages
   company: CISA Cyber Assessments
   galaxy_tags:
-    - skeleton
+    - upgrade
   license: CC0
   min_ansible_version: 2.0
   platforms:
@@ -27,6 +27,6 @@ galaxy_info:
       versions:
         - bionic
         - xenial
-  role_name: skeleton
+  role_name: upgrade
 
 dependencies: []

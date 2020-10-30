@@ -8,4 +8,4 @@
     update_cache: yes
 - name: Upgrade all packages (Debian)
   apt:
-    upgrade: dist
+    upgrade: full

@@ -1,5 +1,15 @@
 ---
-# tasks file for upgrade (Debian)
+- name: Add backports repository
+  apt_repository:
+    repo: deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main
+  when:
+    - ansible_distribution == "Debian"
+    # Bullseye is currently Debian testing, so it has no backports
+    # repo available
+    - ansible_distribution_major_version != "11"
+    - ansible_distribution_major_version != "testing/release"
+    - ansible_distribution_release != "bullseye"
+    - ansible_distribution_release != "n/a"
 
 - name: Install aptitude (Debian)
   apt:

@@ -4,7 +4,7 @@
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}_{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
       paths:
@@ -24,7 +24,7 @@
 # Note that this is done _only_ for version 10 of the Debian
 # distribution and not for other distributions in the Debian family.
 - name: Hold kernel for Debian distribution
-  include: Debian_10_hold_kernel.yml
+  include: Debian_buster_hold_kernel.yml
   when:
     - ansible_distribution == "Debian"
-    - ansible_distribution_version == "10"
+    - ansible_distribution_release == "buster"

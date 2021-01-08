@@ -14,9 +14,9 @@
   tasks:
     - name: Group hosts by OS distribution
       group_by:
-        key: os_{{ ansible_distribution }}_{{ ansible_distribution_version }}
+        key: os_{{ ansible_distribution }}_{{ ansible_distribution_release }}
 - name: Install the latest kernel (Debian 10)
-  hosts: os_Debian_10
+  hosts: os_Debian_buster
   tasks:
     - name: Install aptitude (Debian 10)
       apt:

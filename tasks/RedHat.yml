@@ -2,7 +2,7 @@
 # tasks file for upgrade (RedHat)
 
 - name: Upgrade all packages (RedHat)
-  yum:
+  ansible.builtin.yum:
     name: '*'
     # ansible-lint generates a warning that "package installs should
     # not use latest" here, but this is one place where we want to use

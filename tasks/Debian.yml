@@ -2,10 +2,10 @@
 # tasks file for upgrade (Debian)
 
 - name: Install aptitude (Debian)
-  apt:
+  ansible.builtin.apt:
     name: aptitude
     force_apt_get: yes
     update_cache: yes
 - name: Upgrade all packages (Debian)
-  apt:
+  ansible.builtin.apt:
     upgrade: full

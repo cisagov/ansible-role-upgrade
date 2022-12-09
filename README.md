@@ -33,7 +33,7 @@ Here's how to use it in a playbook:
   become: yes
   become_method: sudo
   tasks:
-    - name: Include skeleton
+    - name: Include upgrade
       ansible.builtin.include_role:
         name: upgrade
 ```

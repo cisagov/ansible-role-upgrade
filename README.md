@@ -1,8 +1,7 @@
 # ansible-role-upgrade #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-upgrade/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-upgrade/actions)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-upgrade.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-upgrade/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-upgrade.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-upgrade/context:python)
+[![CodeQL](https://github.com/cisagov/ansible-role-upgrade/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-upgrade/actions/workflows/codeql-analysis.yml)
 
 An Ansible role for upgrading the base OS.
 
@@ -33,8 +32,10 @@ Here's how to use it in a playbook:
 - hosts: all
   become: yes
   become_method: sudo
-  roles:
-    - upgrade
+  tasks:
+    - name: Include upgrade
+      ansible.builtin.include_role:
+        name: upgrade
 ```
 
 ## Contributing ##

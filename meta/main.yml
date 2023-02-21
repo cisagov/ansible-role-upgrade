@@ -1,8 +1,9 @@
 ---
+dependencies: []
 galaxy_info:
   author: Jeremy Frasier
-  description: Upgrade all packages
   company: CISA Cyber Assessments
+  description: Upgrade all packages
   galaxy_tags:
     - upgrade
   license: CC0
@@ -28,7 +29,6 @@ galaxy_info:
         - bookworm
     - name: Fedora
       versions:
-        - "35"
         - "36"
         - "37"
     - name: Ubuntu
@@ -37,5 +37,3 @@ galaxy_info:
         - focal
         - jammy
   role_name: upgrade
-
-dependencies: []

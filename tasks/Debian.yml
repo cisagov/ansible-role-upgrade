@@ -1,6 +1,4 @@
 ---
-# tasks file for upgrade (Debian)
-
 - name: Install aptitude (Debian)
   ansible.builtin.apt:
     name: aptitude

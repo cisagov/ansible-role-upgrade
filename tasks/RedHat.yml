@@ -1,6 +1,4 @@
 ---
-# tasks file for upgrade (RedHat)
-
 - name: Upgrade all packages (RedHat)
   ansible.builtin.dnf:
     name: '*'

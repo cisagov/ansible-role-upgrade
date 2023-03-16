@@ -14,22 +14,15 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 @pytest.mark.parametrize("pkg", ["aptitude"])
-def test_debian_packages(host, pkg):
-    """Test that appropriate packages were installed on Debian."""
-    if (
-        host.system_info.distribution == "debian"
-        or host.system_info.distribution == "kali"
-    ):
+def test_apt_packages(host, pkg):
+    """Test that appropriate packages were installed on apt-based systems."""
+    if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         assert host.package(pkg).is_installed
 
 
-def test_debian_updated(host):
-    """Test that Debian instances were updated."""
-    if (
-        host.system_info.distribution == "debian"
-        or host.system_info.distribution == "kali"
-    ):
-        print(host.file("/var/lib/apt/lists").mtime)
+def test_apt_updated(host):
+    """Test that apt-based systems were updated."""
+    if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         # Make sure that the instance was updated in the last 20
         # minutes.
         assert (
@@ -39,12 +32,9 @@ def test_debian_updated(host):
 
 # This test can fail if there were no updates to install.
 @pytest.mark.xfail
-def test_redhat_updated_time(host):
-    """Test that RedHat instances were updated."""
-    if (
-        host.system_info.distribution == "amzn"
-        or host.system_info.distribution == "fedora"
-    ):
+def test_yum_updated_time(host):
+    """Test that yum-based instances were updated."""
+    if host.system_info.distribution in ["amzn"]:
         last_update = datetime.datetime.strptime(
             host.run(
                 "yum --quiet history list | cut --delimiter='|' --fields=3-4 | grep -F U | cut --delimiter='|' --fields=1 | head --lines=1"
@@ -56,12 +46,9 @@ def test_redhat_updated_time(host):
         assert (datetime.datetime.now() - last_update).total_seconds() <= 20 * 60
 
 
-def test_redhat_updated_command_output(host):
-    """Test that RedHat instances were updated."""
-    if (
-        host.system_info.distribution == "amzn"
-        or host.system_info.distribution == "fedora"
-    ):
+def test_yum_updated_command_output(host):
+    """Test that yum-based instances were updated."""
+    if host.system_info.distribution in ["amzn"]:
         yum_output = host.run("yum update")
         # If the update succeeded or there was nothing to update
         assert (

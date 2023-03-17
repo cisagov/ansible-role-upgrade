@@ -50,7 +50,7 @@ def test_yum_updated_command_output(host):
     """Test that yum-based instances were updated."""
     if host.system_info.distribution in ["amzn"]:
         yum_output = host.run("yum update")
-        # If the update succeeded or there was nothing to update
+        # There should be nothing to update.
         assert "No packages marked for update" in yum_output.stdout
 
 
@@ -74,5 +74,5 @@ def test_dnf_updated_command_output(host):
     """Test that dnf-based instances were updated."""
     if host.system_info.distribution in ["fedora"]:
         dnf_output = host.run("dnf update")
-        # If the update succeeded or there was nothing to update
+        # There should be nothing to update.
         assert "Nothing to do." in dnf_output.stdout

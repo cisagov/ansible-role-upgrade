@@ -1,9 +1,9 @@
 ---
-- name: Install aptitude (Debian)
+- name: Install aptitude
   ansible.builtin.apt:
     name: aptitude
     force_apt_get: yes
     update_cache: yes
-- name: Upgrade all packages (Debian)
+- name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: full

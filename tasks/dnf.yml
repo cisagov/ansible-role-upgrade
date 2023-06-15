@@ -5,5 +5,5 @@
     # ansible-lint generates a warning that "package installs should
     # not use latest" here, but this is one place where we want to use
     # it.
-    state: latest  # noqa 403
+    state: latest  # noqa package-latest
     update_cache: yes

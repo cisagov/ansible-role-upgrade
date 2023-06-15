@@ -1,4 +1,0 @@
----
-- name: Run update-grub
-  ansible.builtin.command:
-    cmd: /usr/sbin/update-grub

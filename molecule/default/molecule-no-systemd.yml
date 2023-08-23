@@ -38,6 +38,7 @@ platforms:
   - image: ubuntu:jammy
     name: ubuntu22
     platform: amd64
+    pre_build_image: yes
 scenario:
   name: default
 verifier:

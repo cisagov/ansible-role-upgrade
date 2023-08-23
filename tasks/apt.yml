@@ -1,4 +1,9 @@
 ---
+- name: Uninstall aptitude
+  ansible.builtin.apt:
+    name: aptitude
+    force_apt_get: yes
+    state: absent
 - name: Install aptitude
   ansible.builtin.apt:
     name: aptitude

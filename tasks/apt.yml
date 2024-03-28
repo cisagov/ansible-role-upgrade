@@ -1,9 +1,10 @@
 ---
 - name: Install aptitude
   ansible.builtin.apt:
+    force_apt_get: true
     name: aptitude
-    force_apt_get: yes
-    update_cache: yes
+    update_cache: true
+
 - name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: full

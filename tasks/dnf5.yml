@@ -7,3 +7,19 @@
     # it.
     state: latest  # noqa package-latest
     update_cache: true
+
+# We have seen on both the Fedora 42 Docker image (fedora:42) and the
+# Fedora 42 base AMI that we use in AWS that the /usr/local/sbin
+# symlink to /usr/local/bin does not exist.  In that case one must
+# reinstall the filesystem package to ensure the directory exists.
+#
+# TODO: Remove this Ansible code when possible.  See #73 for more
+# details.
+- name: Reinstall filesystem package
+  ansible.builtin.command:
+    argv:
+      - dnf5
+      - --assumeyes
+      - reinstall
+      - filesystem
+    creates: /usr/local/sbin

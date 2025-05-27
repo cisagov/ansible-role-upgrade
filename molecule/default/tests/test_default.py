@@ -52,3 +52,9 @@ def test_dnf_updated_command_output(host):
         dnf_output = host.run("dnf update")
         # There should be nothing to update.
         assert "Nothing to do." in dnf_output.stdout
+
+
+@pytest.mark.parametrize("d", ["/usr/local/sbin"])
+def test_dir_exists(host, d):
+    """Test expected directory exists."""
+    assert host.file(d).exists, f"Directory {d} does not exist."

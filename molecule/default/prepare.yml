@@ -38,5 +38,16 @@
         'degraded' in systemctl_status.stdout
       when: ansible_service_mgr == "systemd"
 
+- name: >
+    Switch Debian platforms that are no longer supported to Debian
+    Archive package repositories
+  hosts: all
+  tasks:
+    - name: >
+        Switch Debian platforms that are no longer supported to Debian
+        Archive package repositories
+      ansible.builtin.include_role:
+        name: debian_archive
+
 - name: Import externally-managed-python playbook
   ansible.builtin.import_playbook: externally-managed-python.yml

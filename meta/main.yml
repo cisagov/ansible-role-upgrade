@@ -4,7 +4,9 @@
 # assigned static variables.
 #
 # See also cisagov/skeleton-ansible-role#153.
-dependencies: []
+dependencies:
+  - role: debian_archive
+    src: https://github.com/cisagov/ansible-role-debian-archive
 galaxy_info:
   author: Jeremy Frasier
   company: CISA Cyber Assessments

@@ -1,6 +1,7 @@
 # ansible-role-upgrade #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-upgrade/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-upgrade/actions)
+[![License](https://img.shields.io/github/license/cisagov/ansible-role-upgrade)](https://spdx.org/licenses/)
 [![CodeQL](https://github.com/cisagov/ansible-role-upgrade/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-upgrade/actions/workflows/codeql-analysis.yml)
 
 An Ansible role for upgrading the base OS.

@@ -37,7 +37,9 @@ def test_dnf_updated_time(host):
     if host.system_info.distribution in ["amzn", "fedora"]:
         last_update = datetime.datetime.strptime(
             host.run(
-                "yum --quiet history list | cut --delimiter='|' --fields=3-4 | grep --fixed-strings U | cut --delimiter='|' --fields=1 | head --lines=1"
+                "yum --quiet history list | cut --delimiter='|' --fields=3-4 "
+                "| grep --fixed-strings U | cut --delimiter='|' --fields=1 "
+                "| head --lines=1"
             ).stdout.strip(),
             "%Y-%m-%d %H:%M",
         )
